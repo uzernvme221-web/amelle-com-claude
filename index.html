@@ -778,6 +778,192 @@
       background:var(--orange);box-shadow:0 0 6px var(--orange);
     }
 
+    /* ── CATALOGUE TEASER ────────────────────────────────── */
+    #catalogue{
+      position:relative;padding:140px 8vw 160px;
+      background:radial-gradient(ellipse at 50% 0%, rgba(255,101,33,.08), transparent 60%), #060912;
+      overflow:hidden;
+    }
+    #catalogue::before{
+      content:'';position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(26,110,255,.10), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255,101,33,.12), transparent 45%);
+      pointer-events:none;
+    }
+    .cat-wrap{
+      position:relative;z-index:1;
+      max-width:1280px;margin:0 auto;
+      display:grid;grid-template-columns:1.05fr 1fr;gap:80px;align-items:center;
+    }
+    .cat-text .section-eyebrow{margin-bottom:18px;}
+    .cat-text h2{
+      font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-.025em;
+      font-size:clamp(2rem,4.2vw,3.6rem);line-height:1.05;margin-bottom:22px;
+    }
+    .cat-text h2 .grad{
+      background:linear-gradient(135deg,var(--orange) 0%,#FFB347 50%,var(--orange-lt) 100%);
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .cat-text p.cat-lead{
+      color:var(--muted);font-size:1.08rem;line-height:1.7;max-width:520px;margin-bottom:30px;
+    }
+    .cat-stats{display:flex;gap:34px;margin-bottom:38px;flex-wrap:wrap;}
+    .cat-stat{display:flex;flex-direction:column;}
+    .cat-stat strong{
+      font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:var(--orange);
+      line-height:1;letter-spacing:-.02em;
+    }
+    .cat-stat span{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.15em;margin-top:6px;}
+    .cat-cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+    .cat-cta{
+      position:relative;display:inline-flex;align-items:center;gap:14px;
+      padding:18px 32px;border-radius:60px;
+      background:linear-gradient(135deg,var(--orange) 0%,#FF4D00 100%);
+      color:#fff;text-decoration:none;font-weight:700;font-size:1rem;
+      box-shadow:0 18px 50px -10px rgba(255,101,33,.55), inset 0 1px 0 rgba(255,255,255,.25);
+      overflow:hidden;transition:transform .3s var(--expo);
+    }
+    .cat-cta::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,#FF4D00 0%,var(--orange) 100%);
+      opacity:0;transition:opacity .3s;
+    }
+    .cat-cta:hover::before{opacity:1;}
+    .cat-cta > *{position:relative;z-index:1;}
+    .cat-cta .cat-cta-icon{
+      width:30px;height:30px;border-radius:50%;background:#fff;color:var(--orange);
+      display:grid;place-items:center;font-size:1rem;transition:transform .3s var(--expo);
+    }
+    .cat-cta:hover .cat-cta-icon{transform:translateX(4px) rotate(-12deg);}
+    .cat-cta-pdf{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:14px 22px;border-radius:60px;
+      border:1px solid rgba(240,242,255,.15);background:rgba(240,242,255,.03);
+      color:var(--muted);text-decoration:none;font-size:.9rem;
+      transition:all .3s;
+    }
+    .cat-cta-pdf:hover{color:var(--text);border-color:rgba(255,101,33,.4);background:rgba(255,101,33,.05);}
+
+    /* 3D book mockup */
+    .book-stage{
+      position:relative;perspective:1800px;perspective-origin:50% 50%;
+      display:flex;align-items:center;justify-content:center;min-height:480px;
+    }
+    .book-stage::before{
+      content:'';position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+      width:60%;height:30px;border-radius:50%;
+      background:radial-gradient(ellipse,rgba(0,0,0,.55),transparent 70%);
+      filter:blur(18px);z-index:0;
+    }
+    .book{
+      position:relative;width:330px;height:460px;
+      transform-style:preserve-3d;
+      transform:rotateX(8deg) rotateY(-26deg);
+      transition:transform .6s var(--expo);
+      will-change:transform;
+    }
+    .book-face{
+      position:absolute;inset:0;
+      backface-visibility:hidden;
+      border-radius:4px 14px 14px 4px;
+      overflow:hidden;
+      box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
+    }
+    .book-cover{
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.10) 0%,transparent 60%),
+        linear-gradient(160deg,var(--orange) 0%,#E5410E 55%,#9B2A06 100%);
+      color:#fff;
+      display:flex;flex-direction:column;justify-content:space-between;
+      padding:32px 26px 30px;
+      transform:translateZ(20px);
+    }
+    .book-cover::before{
+      content:'';position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,.25), transparent 40%),
+        repeating-linear-gradient(45deg,transparent 0 8px,rgba(255,255,255,.03) 8px 9px);
+      pointer-events:none;
+    }
+    .book-cover-top{position:relative;z-index:1;}
+    .book-cover-brand{
+      font-family:'Syne',sans-serif;font-weight:800;font-size:.7rem;
+      letter-spacing:.3em;opacity:.85;
+    }
+    .book-cover-tagline{font-size:.62rem;letter-spacing:.2em;opacity:.65;margin-top:4px;text-transform:uppercase;}
+    .book-cover-mid{
+      position:relative;z-index:1;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:2.1rem;line-height:1;letter-spacing:-.025em;
+    }
+    .book-cover-mid span{display:block;white-space:nowrap;}
+    .book-cover-mid span:last-child{font-size:.92rem;font-weight:500;opacity:.85;margin-top:10px;letter-spacing:0;white-space:normal;}
+    .book-cover-bottom{
+      position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;
+      font-size:.65rem;letter-spacing:.2em;opacity:.7;text-transform:uppercase;
+    }
+    .book-cover-pages{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;opacity:1;}
+    .book-pages{
+      position:absolute;top:6px;right:-2px;bottom:6px;width:18px;
+      background:repeating-linear-gradient(to bottom,#f5f1e8 0 1px,#d8d0bf 1px 2px);
+      transform:translateZ(10px) translateX(2px);
+      border-radius:0 4px 4px 0;
+    }
+    .book-spine{
+      position:absolute;top:0;left:0;width:30px;height:100%;
+      background:linear-gradient(90deg,#7A2106,#C4360A);
+      transform:rotateY(-90deg) translateX(-15px);
+      transform-origin:left center;
+    }
+    .book-back{
+      background:linear-gradient(160deg,#9B2A06 0%,#5C1903 100%);
+      transform:translateZ(-20px) rotateY(180deg);
+    }
+    .book-glow{
+      position:absolute;inset:-40px;border-radius:50%;
+      background:radial-gradient(circle,rgba(255,101,33,.35),transparent 60%);
+      filter:blur(40px);z-index:-1;
+      animation:bookGlow 4s ease-in-out infinite;
+    }
+    @keyframes bookGlow{
+      0%,100%{opacity:.55;transform:scale(1);}
+      50%{opacity:.85;transform:scale(1.08);}
+    }
+    .book-stage:hover .book{
+      transform:rotateX(4deg) rotateY(-14deg) translateY(-10px);
+    }
+    .book-float-tag{
+      position:absolute;background:rgba(11,16,28,.85);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border:1px solid rgba(255,101,33,.25);
+      border-radius:14px;padding:10px 16px;font-size:.78rem;
+      color:var(--text);display:flex;align-items:center;gap:10px;
+      box-shadow:0 12px 30px -10px rgba(0,0,0,.5);
+      animation:tagFloat 6s ease-in-out infinite;
+      z-index:3;
+    }
+    .book-float-tag.tag-1{top:18%;right:-4%;animation-delay:0s;}
+    .book-float-tag.tag-2{bottom:22%;left:-2%;animation-delay:-2.5s;}
+    .book-float-tag .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange);}
+    @keyframes tagFloat{
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-12px);}
+    }
+
+    @media(max-width:900px){
+      #catalogue{padding:90px 24px 100px;}
+      .cat-wrap{grid-template-columns:1fr;gap:60px;text-align:center;}
+      .cat-stats{justify-content:center;}
+      .cat-cta-row{justify-content:center;}
+      .cat-text p.cat-lead{margin-left:auto;margin-right:auto;}
+      .book{width:240px;height:340px;}
+      .book-cover-mid{font-size:1.9rem;}
+      .book-stage{min-height:420px;}
+      .book-float-tag.tag-1{right:0%;}
+      .book-float-tag.tag-2{left:0%;}
+    }
+
     /* ── MID CTA ──────────────────────────────────────────── */
     #mid-cta{background:#060912;padding:80px 8vw;}
     .mid-cta-card{
@@ -1054,6 +1240,7 @@
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#process">Processus</a></li>
+    <li><a href="#catalogue">Catalogue</a></li>
     <li><a href="#testimonials">Témoignages</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -1517,6 +1704,53 @@
   </div>
 </section>
 
+<!-- ─── CATALOGUE TEASER ────────────────────────────────────── -->
+<section id="catalogue">
+  <div class="cat-wrap">
+    <div class="cat-text" data-reveal>
+      <p class="section-eyebrow">Notre catalogue</p>
+      <h2>Découvrez tout<br>notre <span class="grad">savoir-faire</span></h2>
+      <p class="cat-lead">159 pages soigneusement conçues qui présentent l'ensemble de notre savoir-faire : impression grand format, signalétique, goodies tech, organiseurs, écriture, packaging, événementiel et bien plus encore.</p>
+      <div class="cat-stats">
+        <div class="cat-stat"><strong>159</strong><span>Pages</span></div>
+        <div class="cat-stat"><strong>20+</strong><span>Catégories</span></div>
+      </div>
+      <div class="cat-cta-row">
+        <a href="catalogue.html" class="cat-cta" data-magnetic>
+          <span>Cliquez ici pour parcourir notre catalogue</span>
+          <span class="cat-cta-icon">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="book-stage" data-tilt-book>
+      <div class="book-glow"></div>
+      <div class="book" id="catBook">
+        <div class="book-face book-back"></div>
+        <div class="book-spine"></div>
+        <div class="book-pages"></div>
+        <div class="book-face book-cover">
+          <div class="book-cover-top">
+            <div class="book-cover-brand">AMELLE COM</div>
+            <div class="book-cover-tagline">Catalogue · Édition 2026</div>
+          </div>
+          <div class="book-cover-mid">
+            <span>Notre</span>
+            <span>Catalogue</span>
+            <span>Communication visuelle &amp; impression à Dakar</span>
+          </div>
+          <div class="book-cover-bottom">
+            <span>Depuis 2005</span>
+            <span class="book-cover-pages">159 PAGES</span>
+          </div>
+        </div>
+      </div>
+      <div class="book-float-tag tag-1"><span class="dot"></span> Mis à jour 2026</div>
+      <div class="book-float-tag tag-2"><span class="dot"></span> 20+ catégories</div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── MID CTA ─────────────────────────────────────────────── -->
 <section id="mid-cta">
   <div class="mid-cta-card">
@@ -1952,7 +2186,7 @@ if (!isCoarse) {
   })
 
   /* Magnetic CTA buttons */
-  document.querySelectorAll('.btn, .nav-cta, .form-submit, .ctrl-btn, .fab-whatsapp, .social').forEach(el => {
+  document.querySelectorAll('.btn, .nav-cta, .form-submit, .ctrl-btn, .fab-whatsapp, .social, [data-magnetic]').forEach(el => {
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect()
       const cx = r.left + r.width / 2
@@ -2068,6 +2302,52 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       requestAnimationFrame(tilt)
     })()
+  })
+
+  /* ── CATALOGUE BOOK — mouse parallax 3D tilt ─────────────── */
+  document.querySelectorAll('[data-tilt-book]').forEach(stage => {
+    const book = stage.querySelector('.book')
+    if (!book) return
+    let tx = -28, ty = 8, cx = -28, cy = 8, active = false
+
+    stage.addEventListener('mouseenter', () => { active = true })
+    stage.addEventListener('mouseleave', () => {
+      active = false
+      gsap.to(book, { rotateX: 8, rotateY: -28, translateY: 0, duration: .9, ease: 'expo.out' })
+    })
+    stage.addEventListener('mousemove', e => {
+      const r = stage.getBoundingClientRect()
+      const px = (e.clientX - r.left) / r.width
+      const py = (e.clientY - r.top)  / r.height
+      tx = (px - .5) * -40 - 14   // rotateY: keep slight default angle
+      ty = (py - .5) * -16 + 4    // rotateX
+    })
+    ;(function loop(){
+      if (active) {
+        cx += (tx - cx) * .08
+        cy += (ty - cy) * .08
+        gsap.set(book, { rotateY: cx, rotateX: cy, translateY: -10 })
+      }
+      requestAnimationFrame(loop)
+    })()
+
+    /* Reveal */
+    gsap.from(stage, {
+      opacity: 0, y: 60, duration: 1.1, ease: 'expo.out',
+      scrollTrigger: { trigger: stage, start: 'top 85%' }
+    })
+    gsap.from(stage.querySelectorAll('.book-float-tag'), {
+      opacity: 0, scale: .8, duration: .8, stagger: .15, ease: 'expo.out',
+      scrollTrigger: { trigger: stage, start: 'top 75%' }
+    })
+  })
+
+  /* Reveal for catalogue text */
+  gsap.utils.toArray('#catalogue [data-reveal]').forEach(el => {
+    gsap.from(el, {
+      opacity: 0, y: 40, duration: 1, ease: 'expo.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' }
+    })
   })
 
   /* ── TESTIMONIALS — STICKY 3D STACK ──────────────────────── */

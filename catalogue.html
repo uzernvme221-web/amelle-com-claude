@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notre Catalogue — Amelle Com | 159 pages de communication visuelle</title>
+  <meta name="description" content="Parcourez le catalogue Amelle Com édition 2026 : 159 pages, 20+ catégories. Impression grand format, signalétique, goodies, packaging, événementiel — agence de communication visuelle à Dakar." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://amelle-com.sn/catalogue.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="fr_SN" />
+  <meta property="og:url" content="https://amelle-com.sn/catalogue.html" />
+  <meta property="og:title" content="Notre Catalogue 2026 — Amelle Com" />
+  <meta property="og:description" content="159 pages, 20+ catégories. Impression, signalétique, goodies, branding." />
+  <meta property="og:image" content="https://amelle-com.sn/og-image.png" />
+
+  <meta name="theme-color" content="#FF6521" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060912'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Syne,system-ui,sans-serif' font-weight='800' font-size='28' fill='%23FF6521'%3EAC%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+
+  <!-- Vercel Analytics -->
+  <script>
+    window.si = window.si || function() { (window.siq = window.siq || []).push(arguments) }
+  </script>
+  <script defer src="https://cdn.vercel-analytics.com/v1/script.js"></script>
+
+  <style>
+    :root{
+      --orange:#FF6521; --orange-lt:#FF9A5C; --orange-glow:rgba(255,101,33,.45);
+      --blue:#1A6EFF; --bg:#060912; --surface:#111827;
+      --text:#F0F2FF; --muted:#6B7A99;
+      --expo:cubic-bezier(.16,1,.3,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{overflow-x:hidden;}
+    body{
+      background:var(--bg);color:var(--text);
+      font-family:'Inter',system-ui,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{display:block;max-width:100%;}
+
+    /* Fog canvas */
+    #fogCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:.45;z-index:0;}
+
+    /* Custom cursor */
+    .cursor-dot,.cursor-ring{
+      position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+      transform:translate3d(-50%,-50%,0);will-change:transform;
+    }
+    .cursor-dot{width:6px;height:6px;background:var(--orange);border-radius:50%;}
+    .cursor-ring{
+      width:38px;height:38px;border:1.5px solid var(--orange);border-radius:50%;
+      mix-blend-mode:difference;transition:width .3s,height .3s,border-color .3s,background .3s;
+    }
+    .cursor-ring.is-hover{width:62px;height:62px;background:rgba(255,255,255,.06);}
+    @media(pointer:coarse){.cursor-dot,.cursor-ring{display:none;}}
+
+    /* Scroll progress */
+    .scroll-progress{
+      position:fixed;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--orange),var(--orange-lt));
+      transform:scaleX(0);transform-origin:left;z-index:1001;
+    }
+
+    /* Navbar */
+    .navbar{
+      position:fixed;top:0;left:0;right:0;z-index:1000;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 6vw;
+      background:rgba(6,9,18,.7);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(240,242,255,.05);
+    }
+    .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.18em;color:var(--text);}
+    .nav-logo span{color:var(--orange);}
+    .nav-back{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 18px;border-radius:60px;
+      border:1px solid rgba(240,242,255,.12);background:rgba(240,242,255,.03);
+      color:var(--muted);font-size:.85rem;transition:all .3s;
+    }
+    .nav-back:hover{color:var(--text);border-color:rgba(255,101,33,.45);background:rgba(255,101,33,.06);}
+
+    /* Header */
+    .cat-header{
+      position:relative;z-index:2;
+      padding:110px 6vw 30px;text-align:center;
+    }
+    .cat-eyebrow{
+      display:inline-block;font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;
+      color:var(--orange);margin-bottom:14px;
+      padding:6px 14px;border:1px solid rgba(255,101,33,.3);border-radius:60px;
+      background:rgba(255,101,33,.08);
+    }
+    .cat-header h1{
+      font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-.025em;
+      font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;margin-bottom:14px;
+    }
+    .cat-header h1 .grad{
+      background:linear-gradient(135deg,var(--orange),#FFB347 50%,var(--orange-lt));
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .cat-header p{color:var(--muted);max-width:560px;margin:0 auto;font-size:1rem;line-height:1.6;}
+    .cat-meta{
+      display:flex;justify-content:center;gap:36px;margin-top:24px;flex-wrap:wrap;
+      font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+    }
+    .cat-meta strong{color:var(--orange);font-family:'Syne',sans-serif;font-weight:800;}
+
+    /* Catalogue stage — flipbook + permanent sidebar on desktop */
+    .cat-stage{
+      position:relative;z-index:2;
+      max-width:1500px;margin:0 auto;
+      padding:30px 4vw 20px;
+      display:grid;grid-template-columns:300px 1fr;gap:36px;
+      align-items:start;
+    }
+    .flip-wrap{
+      display:flex;justify-content:center;align-items:flex-start;min-width:0;
+    }
+    .flip-shadow{
+      position:relative;
+      padding:0;border-radius:8px;
+      filter:drop-shadow(0 30px 60px rgba(0,0,0,.5)) drop-shadow(0 0 40px rgba(255,101,33,.08));
+    }
+    #flipbook{margin:0 auto;}
+    #flipbook .stf__block{background:#0b101c;}
+    #flipbook .page{
+      background:#fff;overflow:hidden;
+      box-shadow:inset 0 0 30px rgba(0,0,0,.05);
+    }
+    #flipbook .page img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      background:#e9e6dd;
+    }
+    #flipbook .page-cover{
+      background:linear-gradient(160deg,var(--orange) 0%,#9B2A06 100%);
+      color:#fff;display:flex;flex-direction:column;justify-content:space-between;
+      padding:8% 8% 7%;
+    }
+    #flipbook .page-cover img{display:none;}
+
+    /* Loading state */
+    .flip-loading{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:24px;padding:80px;text-align:center;
+    }
+    .flip-loading-bar{
+      width:240px;height:4px;border-radius:4px;background:rgba(240,242,255,.08);overflow:hidden;
+    }
+    .flip-loading-bar-fill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg,var(--orange),var(--orange-lt));
+      transition:width .4s var(--expo);
+    }
+    .flip-loading-text{color:var(--muted);font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;}
+    .flip-loading-text strong{color:var(--orange);font-family:'Syne',sans-serif;font-weight:800;}
+
+    /* Controls */
+    .controls{
+      position:relative;z-index:2;
+      display:flex;justify-content:center;align-items:center;gap:14px;
+      padding:24px 6vw 40px;flex-wrap:wrap;
+    }
+    .ctrl-btn{
+      width:50px;height:50px;border-radius:50%;
+      background:rgba(240,242,255,.04);border:1px solid rgba(240,242,255,.10);
+      color:var(--text);display:grid;place-items:center;cursor:pointer;
+      transition:all .3s var(--expo);
+    }
+    .ctrl-btn:hover{background:rgba(255,101,33,.12);border-color:rgba(255,101,33,.45);color:var(--orange);transform:translateY(-2px);}
+    .ctrl-btn svg{width:20px;height:20px;}
+    .ctrl-btn.ctrl-primary{
+      background:linear-gradient(135deg,var(--orange),#FF4D00);border:none;color:#fff;
+      box-shadow:0 10px 30px -8px rgba(255,101,33,.55);
+    }
+    .ctrl-btn.ctrl-primary:hover{transform:translateY(-2px) scale(1.05);}
+    .ctrl-counter{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:0 18px;height:50px;border-radius:60px;
+      background:rgba(240,242,255,.04);border:1px solid rgba(240,242,255,.10);
+      font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;
+      letter-spacing:.05em;color:var(--text);
+    }
+    .ctrl-counter input{
+      width:50px;text-align:center;background:transparent;border:none;color:var(--text);
+      font:inherit;outline:none;
+    }
+    .ctrl-counter span{color:var(--muted);}
+    .ctrl-download{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:0 22px;height:50px;border-radius:60px;
+      background:rgba(240,242,255,.04);border:1px solid rgba(240,242,255,.10);
+      color:var(--text);font-size:.88rem;cursor:pointer;
+      transition:all .3s;
+    }
+    .ctrl-download:hover{background:rgba(255,101,33,.12);border-color:rgba(255,101,33,.45);color:var(--orange);}
+    .ctrl-download svg{width:18px;height:18px;}
+    /* ── TOC SIDEBAR ──────────────────────────────────────── */
+    /* Desktop default: permanent sidebar in the grid column */
+    .toc-sidebar{
+      position:sticky;top:90px;
+      max-height:calc(100vh - 110px);
+      background:rgba(11,16,28,.55);
+      backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border:1px solid rgba(240,242,255,.07);
+      border-radius:18px;
+      display:flex;flex-direction:column;
+      box-shadow:0 20px 50px -20px rgba(0,0,0,.5);
+      overflow:hidden;
+    }
+
+    /* Drawer / overlay parts hidden on desktop */
+    .toc-toggle{
+      display:none;
+      position:fixed;top:74px;left:14px;z-index:900;
+      width:44px;height:44px;border-radius:50%;
+      background:rgba(17,24,39,.92);border:1px solid rgba(240,242,255,.12);
+      backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      color:var(--text);align-items:center;justify-content:center;cursor:pointer;
+      transition:all .3s var(--expo);
+      box-shadow:0 10px 30px -10px rgba(0,0,0,.5);
+    }
+    .toc-toggle:hover{background:rgba(255,101,33,.18);border-color:var(--orange);color:var(--orange);}
+    .toc-toggle .bar{width:18px;height:2px;background:currentColor;border-radius:2px;}
+    .toc-toggle .bars{display:flex;flex-direction:column;gap:4px;}
+
+    .toc-backdrop{
+      position:fixed;inset:0;z-index:997;
+      background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
+      opacity:0;pointer-events:none;transition:opacity .4s;
+    }
+
+    .toc-header{
+      padding:20px 22px 14px;border-bottom:1px solid rgba(240,242,255,.06);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .toc-header-title{
+      font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:-.01em;
+    }
+    .toc-header-title span{color:var(--orange);}
+    .toc-close{
+      width:32px;height:32px;border-radius:50%;
+      background:rgba(240,242,255,.05);border:1px solid rgba(240,242,255,.08);
+      color:var(--muted);display:none;place-items:center;cursor:pointer;
+      transition:all .3s;
+    }
+    .toc-close:hover{color:var(--orange);border-color:var(--orange);}
+    .toc-close svg{width:14px;height:14px;}
+
+    .toc-list{
+      flex:1;overflow-y:auto;padding:10px 10px 16px;
+      scrollbar-width:thin;scrollbar-color:rgba(255,101,33,.3) transparent;
+    }
+    .toc-list::-webkit-scrollbar{width:6px;}
+    .toc-list::-webkit-scrollbar-thumb{background:rgba(255,101,33,.3);border-radius:3px;}
+
+    .toc-item{
+      display:flex;align-items:center;gap:12px;
+      width:100%;padding:11px 12px;margin-bottom:3px;
+      border-radius:10px;cursor:pointer;
+      background:transparent;border:1px solid transparent;
+      text-align:left;color:var(--text);
+      transition:all .25s var(--expo);
+    }
+    .toc-item:hover{background:rgba(255,101,33,.07);border-color:rgba(255,101,33,.2);transform:translateX(3px);}
+    .toc-item.is-active{
+      background:linear-gradient(90deg,rgba(255,101,33,.18),rgba(255,101,33,.03));
+      border-color:rgba(255,101,33,.45);
+    }
+    .toc-item-color{
+      flex:0 0 4px;align-self:stretch;border-radius:4px;
+      background:var(--cat-color, var(--orange));
+      box-shadow:0 0 12px var(--cat-color, var(--orange));
+    }
+    .toc-item-main{flex:1;min-width:0;}
+    .toc-item-title{
+      font-size:.86rem;font-weight:600;line-height:1.25;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .toc-item-meta{
+      font-size:.68rem;color:var(--muted);margin-top:2px;letter-spacing:.05em;
+      font-family:'Syne',sans-serif;
+    }
+    .toc-item-arrow{
+      flex:0 0 18px;color:var(--muted);
+      transform:translateX(-4px);opacity:.4;transition:all .3s;
+    }
+    .toc-item:hover .toc-item-arrow{transform:translateX(0);opacity:1;color:var(--orange);}
+
+    .toc-footer{
+      padding:14px 20px;border-top:1px solid rgba(240,242,255,.06);
+      color:var(--muted);font-size:.72rem;letter-spacing:.05em;
+    }
+    .toc-footer strong{color:var(--orange);font-family:'Syne',sans-serif;}
+
+    /* Below 1100px: sidebar becomes a fixed drawer */
+    @media(max-width:1099px){
+      .cat-stage{grid-template-columns:1fr;}
+      .toc-toggle{display:flex;}
+      .toc-close{display:grid;}
+      .toc-sidebar{
+        position:fixed;top:0;left:0;bottom:0;width:340px;max-width:88vw;
+        max-height:none;border-radius:0;z-index:998;
+        background:rgba(11,16,28,.94);
+        border:none;border-right:1px solid rgba(240,242,255,.08);
+        transform:translateX(-100%);transition:transform .5s var(--expo);
+        box-shadow:20px 0 60px -10px rgba(0,0,0,.6);
+      }
+      .toc-sidebar.is-open{transform:translateX(0);}
+      .toc-backdrop.is-open{opacity:1;pointer-events:auto;}
+      .toc-header{padding:28px 26px 18px;}
+      .toc-header-title{font-size:1.15rem;}
+      .toc-item{padding:13px 14px;border-radius:12px;}
+      .toc-item-title{font-size:.92rem;}
+      .toc-item-meta{font-size:.72rem;}
+    }
+
+    @media(max-width:760px){
+      .toc-toggle{top:72px;left:14px;width:44px;height:44px;}
+      .toc-toggle svg{width:18px;height:18px;}
+    }
+
+    /* Info strip below */
+    .info-strip{
+      position:relative;z-index:2;
+      max-width:1100px;margin:40px auto 0;padding:40px 6vw 100px;
+      display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+    }
+    .info-card{
+      padding:28px 26px;border-radius:18px;
+      background:rgba(17,24,39,.5);border:1px solid rgba(240,242,255,.06);
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+      transition:all .4s var(--expo);
+    }
+    .info-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(255,101,33,.3);
+      background:rgba(17,24,39,.7);
+    }
+    .info-card .icon{
+      width:44px;height:44px;border-radius:12px;
+      background:linear-gradient(135deg,rgba(255,101,33,.18),rgba(255,101,33,.04));
+      border:1px solid rgba(255,101,33,.3);
+      display:grid;place-items:center;color:var(--orange);margin-bottom:16px;
+    }
+    .info-card h3{
+      font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:8px;letter-spacing:-.01em;
+    }
+    .info-card p{color:var(--muted);font-size:.88rem;line-height:1.55;}
+
+    /* Final CTA */
+    .final-cta{
+      position:relative;z-index:2;text-align:center;padding:60px 6vw 100px;
+    }
+    .final-cta h2{
+      font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;
+      letter-spacing:-.02em;line-height:1.1;margin-bottom:14px;
+    }
+    .final-cta p{color:var(--muted);margin-bottom:28px;font-size:1rem;}
+    .btn-primary{
+      display:inline-flex;align-items:center;gap:12px;
+      padding:18px 32px;border-radius:60px;
+      background:linear-gradient(135deg,var(--orange),#FF4D00);color:#fff;font-weight:700;
+      box-shadow:0 20px 50px -10px rgba(255,101,33,.55);
+      transition:transform .3s var(--expo);
+    }
+    .btn-primary:hover{transform:translateY(-3px) scale(1.02);}
+
+    /* Mobile fallback - vertical scroll viewer */
+    .mobile-viewer{display:none;}
+    @media(max-width:760px){
+      .flip-wrap, .controls .ctrl-fullscreen{display:none !important;}
+      .mobile-viewer{
+        display:flex;flex-direction:column;gap:14px;
+        padding:30px 16px;
+      }
+      .mobile-viewer img{
+        width:100%;border-radius:8px;
+        box-shadow:0 12px 30px -10px rgba(0,0,0,.5);
+        background:#e9e6dd;
+      }
+      .info-strip{grid-template-columns:1fr;padding:30px 16px 60px;}
+      .cat-header{padding:90px 16px 20px;}
+      .controls{padding:20px 16px 30px;gap:10px;}
+      .ctrl-counter{padding:0 14px;}
+      .ctrl-download span{display:none;}
+      .ctrl-download{padding:0;width:50px;justify-content:center;}
+    }
+
+    /* Fullscreen mode */
+    body.is-fullscreen .navbar,
+    body.is-fullscreen .cat-header,
+    body.is-fullscreen .info-strip,
+    body.is-fullscreen .final-cta{display:none;}
+    body.is-fullscreen .flip-wrap{padding:80px 4vw 20px;min-height:100vh;}
+    body.is-fullscreen .controls{position:fixed;bottom:20px;left:0;right:0;z-index:100;background:rgba(6,9,18,.75);backdrop-filter:blur(14px);padding:14px 6vw;border-radius:60px;width:fit-content;margin:0 auto;}
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="fogCanvas"></canvas>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Drawer overlay parts (only used <1100px) -->
+<button class="toc-toggle" id="tocToggle" aria-label="Ouvrir le sommaire" title="Sommaire">
+  <div class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+</button>
+<div class="toc-backdrop" id="tocBackdrop"></div>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">AMELLE<span> COM</span></a>
+  <a href="index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    <span>Retour à l'accueil</span>
+  </a>
+</nav>
+
+<header class="cat-header">
+  <span class="cat-eyebrow">Édition 2026</span>
+  <h1>Notre <span class="grad">Catalogue</span></h1>
+  <p>Parcourez tous nos produits — feuilletez page par page comme un vrai catalogue.</p>
+  <div class="cat-meta">
+    <span><strong id="metaPages">—</strong> Pages</span>
+    <span><strong>20+</strong> Catégories</span>
+  </div>
+</header>
+
+<div class="cat-stage">
+  <aside class="toc-sidebar" id="tocSidebar" aria-label="Sommaire du catalogue">
+    <div class="toc-header">
+      <div class="toc-header-title">Sommaire <span>·</span> <span id="tocCount">20</span></div>
+      <button class="toc-close" id="tocClose" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="toc-list" id="tocList">
+      <!-- entries injected by JS -->
+    </div>
+    <div class="toc-footer">
+      Cliquez une catégorie pour <strong>vous y rendre</strong>.
+    </div>
+  </aside>
+
+  <div class="flip-wrap">
+    <div class="flip-shadow">
+      <div id="flipbook">
+        <div class="flip-loading">
+          <div class="flip-loading-text">Chargement du <strong>catalogue</strong></div>
+          <div class="flip-loading-bar"><div class="flip-loading-bar-fill" id="loadingFill"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-viewer" id="mobileViewer">
+  <!-- pages injected on mobile -->
+</div>
+
+<div class="controls" id="controls" style="display:none;">
+  <button class="ctrl-btn ctrl-fullscreen" id="btnFullscreen" aria-label="Plein écran">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+  </button>
+  <button class="ctrl-btn" id="btnPrev" aria-label="Précédent">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="ctrl-counter">
+    <input type="number" id="pageInput" min="1" value="1" />
+    <span>/</span>
+    <span id="pageTotal">—</span>
+  </div>
+  <button class="ctrl-btn ctrl-primary" id="btnNext" aria-label="Suivant">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>
+
+<section class="info-strip">
+  <div class="info-card">
+    <div class="icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </div>
+    <h3>Devis sous 24h</h3>
+    <p>Vous repérez un produit qui vous intéresse&nbsp;? Contactez-nous et recevez un devis personnalisé en moins de 24h.</p>
+  </div>
+  <div class="info-card">
+    <div class="icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+    </div>
+    <h3>Imprimé à Dakar</h3>
+    <p>Nos ateliers à Dakar produisent l'intégralité des supports — qualité contrôlée, délais maîtrisés, fabrication locale.</p>
+  </div>
+  <div class="info-card">
+    <div class="icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+    </div>
+    <h3>Livraison Sénégal</h3>
+    <p>Livraison rapide à Dakar et dans toutes les régions du Sénégal. Sur demande, nous expédions également hors du pays.</p>
+  </div>
+</section>
+
+<section class="final-cta">
+  <h2>Un produit du catalogue vous intéresse&nbsp;?</h2>
+  <p>Demandez un devis personnalisé — réponse sous 24h ouvrées.</p>
+  <a href="index.html#contact" class="btn-primary" data-magnetic>
+    Demander un devis
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger)
+
+/* Fog canvas (lightweight ambient version) */
+class FogEngine {
+  constructor(canvas){
+    this.c = canvas; this.ctx = canvas.getContext('2d'); this.blobs = []
+    this.resize(); addEventListener('resize', () => this.resize())
+    for(let i=0;i<10;i++){
+      this.blobs.push({
+        x: Math.random()*this.c.width, y: Math.random()*this.c.height,
+        r: 200 + Math.random()*200,
+        vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.2,
+        hue: Math.random() < .5 ? 18 : 220,
+        a: .12 + Math.random()*.10
+      })
+    }
+  }
+  resize(){
+    this.c.width = innerWidth * devicePixelRatio
+    this.c.height = innerHeight * devicePixelRatio
+    this.ctx.scale(devicePixelRatio, devicePixelRatio)
+  }
+  draw(){
+    this.ctx.clearRect(0,0,this.c.width,this.c.height)
+    this.ctx.globalCompositeOperation = 'lighter'
+    for(const b of this.blobs){
+      b.x += b.vx; b.y += b.vy
+      if(b.x < -b.r || b.x > innerWidth+b.r) b.vx *= -1
+      if(b.y < -b.r || b.y > innerHeight+b.r) b.vy *= -1
+      const g = this.ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r)
+      g.addColorStop(0,`hsla(${b.hue},90%,55%,${b.a})`)
+      g.addColorStop(1,'hsla(0,0%,0%,0)')
+      this.ctx.fillStyle = g
+      this.ctx.fillRect(b.x-b.r,b.y-b.r,b.r*2,b.r*2)
+    }
+  }
+}
+const fog = new FogEngine(document.getElementById('fogCanvas'))
+;(function loop(){fog.draw();requestAnimationFrame(loop)})()
+
+/* Lenis smooth scroll */
+const lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: true })
+lenis.on('scroll', ScrollTrigger.update)
+gsap.ticker.add(t => lenis.raf(t*1000))
+gsap.ticker.lagSmoothing(0)
+
+/* Custom cursor */
+if (!matchMedia('(pointer: coarse)').matches) {
+  const dot = document.getElementById('cursorDot')
+  const ring = document.getElementById('cursorRing')
+  let mx=0,my=0,dx=0,dy=0,rx=0,ry=0
+  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY })
+  ;(function cl(){
+    dx += (mx-dx)*.4; dy += (my-dy)*.4
+    rx += (mx-rx)*.12; ry += (my-ry)*.12
+    dot.style.transform = `translate3d(${dx}px,${dy}px,0) translate(-50%,-50%)`
+    ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`
+    requestAnimationFrame(cl)
+  })()
+  document.querySelectorAll('a, button, .info-card, .ctrl-btn, .ctrl-counter, .ctrl-download').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('is-hover'))
+    el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'))
+  })
+  document.querySelectorAll('.btn-primary, .ctrl-btn, .nav-back, [data-magnetic]').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect()
+      const cx = r.left + r.width/2
+      const cy = r.top + r.height/2
+      el.style.transform = `translate(${(e.clientX - cx)*0.25}px, ${(e.clientY - cy)*0.25}px)`
+    })
+    el.addEventListener('mouseleave', () => { el.style.transform = '' })
+  })
+}
+
+/* Scroll progress */
+const scrollProg = document.getElementById('scrollProgress')
+ScrollTrigger.create({
+  start: 0, end: () => document.documentElement.scrollHeight - innerHeight,
+  onUpdate: self => { gsap.set(scrollProg, { scaleX: self.progress }) }
+})
+
+/* Reveal anims */
+gsap.from('.cat-header > *', { opacity:0, y:30, stagger:.08, duration:1, ease:'expo.out' })
+gsap.utils.toArray('.info-card').forEach((card,i) => {
+  gsap.from(card, {
+    opacity:0, y:50, duration:1, ease:'expo.out', delay: i*.1,
+    scrollTrigger:{trigger:card, start:'top 88%'}
+  })
+})
+gsap.from('.final-cta > *', {
+  opacity:0, y:30, stagger:.1, duration:.9, ease:'expo.out',
+  scrollTrigger:{trigger:'.final-cta', start:'top 85%'}
+})
+
+/* ── FLIPBOOK INITIALIZATION ─────────────────────────────────── */
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches
+const isMobile = matchMedia('(max-width: 760px)').matches
+const flipEl = document.getElementById('flipbook')
+const loadingFill = document.getElementById('loadingFill')
+
+async function initCatalogue() {
+  let manifest
+  try {
+    const res = await fetch('catalogue-pages/manifest.json')
+    manifest = await res.json()
+  } catch (e) {
+    flipEl.innerHTML = `<div class="flip-loading"><div class="flip-loading-text">Erreur de chargement du catalogue</div></div>`
+    console.error('Failed to load manifest:', e)
+    return
+  }
+
+  const totalPages = manifest.pages
+  const aspect = manifest.aspect || 0.707
+  document.getElementById('metaPages').textContent = totalPages
+  document.getElementById('pageTotal').textContent = totalPages
+  document.getElementById('pageInput').max = totalPages
+  loadingFill.style.width = '20%'
+
+  if (isMobile) {
+    /* Mobile: simple vertical scrolling viewer with lazy load */
+    const mv = document.getElementById('mobileViewer')
+    flipEl.parentElement.style.display = 'none'
+    document.getElementById('controls').style.display = 'flex'
+    document.getElementById('btnPrev').style.display = 'none'
+    document.getElementById('btnNext').style.display = 'none'
+    document.querySelector('.ctrl-counter').style.display = 'none'
+
+    for (let i = 1; i <= totalPages; i++) {
+      const img = document.createElement('img')
+      img.loading = 'lazy'
+      img.src = `catalogue-pages/p${String(i).padStart(3,'0')}.webp`
+      img.alt = `Page ${i}`
+      mv.appendChild(img)
+    }
+    loadingFill.style.width = '100%'
+    return
+  }
+
+  /* Desktop: StPageFlip */
+  flipEl.innerHTML = ''
+
+  /* Build pages */
+  for (let i = 1; i <= totalPages; i++) {
+    const pageDiv = document.createElement('div')
+    pageDiv.className = 'page'
+    /* Lazy-load: only first 4 + last get src up front, rest get on flip */
+    const src = `catalogue-pages/p${String(i).padStart(3,'0')}.webp`
+    if (i <= 4 || i === totalPages) {
+      pageDiv.innerHTML = `<img src="${src}" alt="Page ${i}" />`
+    } else {
+      pageDiv.innerHTML = `<img data-src="${src}" alt="Page ${i}" />`
+    }
+    flipEl.appendChild(pageDiv)
+  }
+  loadingFill.style.width = '60%'
+
+  /* Compute page size based on viewport (account for sidebar on desktop) */
+  const sidebarWidth = innerWidth >= 1100 ? 336 : 0   // 300px col + 36px gap
+  const horizPad = innerWidth * 0.08                  // 4vw each side
+  const maxW = Math.min(innerWidth - sidebarWidth - horizPad, 1100)
+  const maxH = innerHeight * 0.78
+  let pageW = maxW / 2
+  let pageH = pageW / aspect
+  if (pageH > maxH) {
+    pageH = maxH
+    pageW = pageH * aspect
+  }
+
+  const pf = new St.PageFlip(flipEl, {
+    width: pageW,
+    height: pageH,
+    size: 'fixed',
+    minWidth: 200, maxWidth: 1000,
+    minHeight: 280, maxHeight: 1400,
+    maxShadowOpacity: 0.45,
+    showCover: true,
+    mobileScrollSupport: false,
+    flippingTime: reducedMotion ? 0 : 700,
+    usePortrait: false,
+    drawShadow: true,
+    autoSize: true,
+    swipeDistance: 30,
+  })
+  pf.loadFromHTML(flipEl.querySelectorAll('.page'))
+  loadingFill.style.width = '100%'
+
+  /* Lazy load images near current spread */
+  function lazyLoadAround(idx) {
+    const radius = 6
+    flipEl.querySelectorAll('.page').forEach((p, i) => {
+      const img = p.querySelector('img')
+      if (!img) return
+      if (Math.abs(i - idx) <= radius && img.dataset.src) {
+        img.src = img.dataset.src
+        delete img.dataset.src
+      }
+    })
+  }
+  lazyLoadAround(0)
+
+  document.getElementById('controls').style.display = 'flex'
+
+  /* Controls */
+  document.getElementById('btnPrev').addEventListener('click', () => pf.flipPrev())
+  document.getElementById('btnNext').addEventListener('click', () => pf.flipNext())
+  document.getElementById('pageInput').addEventListener('change', (e) => {
+    const p = parseInt(e.target.value) - 1
+    if (!isNaN(p) && p >= 0 && p < totalPages) jumpTo(p)
+  })
+  document.getElementById('btnFullscreen').addEventListener('click', () => {
+    document.body.classList.toggle('is-fullscreen')
+    setTimeout(() => { pf.update(); ScrollTrigger.refresh() }, 100)
+  })
+
+  /* Helper: jump to any page (instant, with brief flash feedback) */
+  function jumpTo(pageIdx) {
+    if (pageIdx < 0 || pageIdx >= totalPages) return
+    /* Visual feedback — gentle flash on the flipbook */
+    gsap.fromTo(flipEl.parentElement,
+      { scale: 1 },
+      { scale: 1.015, duration: .15, yoyo: true, repeat: 1, ease: 'power2.out' }
+    )
+    pf.turnToPage(pageIdx)
+    /* Sync UI state */
+    lazyLoadAround(pageIdx)
+    document.getElementById('pageInput').value = pageIdx + 1
+    refreshActive(pageIdx)
+  }
+
+  const indexPg = (manifest.indexPage || 3) - 1  // 0-indexed (for keyboard shortcut)
+
+  /* ─── TOC SIDEBAR ─── */
+  const tocList = document.getElementById('tocList')
+  const tocSidebar = document.getElementById('tocSidebar')
+  const tocBackdrop = document.getElementById('tocBackdrop')
+  const tocToggle = document.getElementById('tocToggle')
+  const tocClose = document.getElementById('tocClose')
+  const tocCount = document.getElementById('tocCount')
+  const toc = manifest.toc || []
+  tocCount.textContent = toc.length
+
+  /* Build TOC items */
+  toc.forEach((item) => {
+    const btn = document.createElement('button')
+    btn.className = 'toc-item'
+    btn.style.setProperty('--cat-color', item.color || '#FF6521')
+    btn.dataset.start = item.page
+    btn.dataset.end = item.end || item.page
+    btn.innerHTML = `
+      <span class="toc-item-color"></span>
+      <span class="toc-item-main">
+        <span class="toc-item-title">${item.title}</span>
+        <span class="toc-item-meta">Pages ${item.page}${item.end && item.end !== item.page ? '–' + item.end : ''}</span>
+      </span>
+      <svg class="toc-item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    `
+    btn.addEventListener('click', () => {
+      jumpTo(item.page - 1)
+      closeToc()
+    })
+    tocList.appendChild(btn)
+  })
+
+  function openToc()  { tocSidebar.classList.add('is-open'); tocBackdrop.classList.add('is-open') }
+  function closeToc() { tocSidebar.classList.remove('is-open'); tocBackdrop.classList.remove('is-open') }
+  tocToggle.addEventListener('click', openToc)
+  tocClose.addEventListener('click', closeToc)
+  tocBackdrop.addEventListener('click', closeToc)
+
+  /* Highlight active TOC entry based on current page */
+  function refreshActive(pageNum) {
+    const p = pageNum + 1  // human page number
+    tocList.querySelectorAll('.toc-item').forEach(btn => {
+      const s = +btn.dataset.start
+      const e = +btn.dataset.end
+      btn.classList.toggle('is-active', p >= s && p <= e)
+    })
+  }
+  refreshActive(0)
+
+  /* Single flipbook flip handler: lazy-load + counter + active highlight */
+  pf.on('flip', (e) => {
+    const idx = e.data
+    lazyLoadAround(idx)
+    document.getElementById('pageInput').value = idx + 1
+    refreshActive(idx)
+  })
+
+  /* Keyboard navigation */
+  addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return
+    if (e.key === 'ArrowLeft') pf.flipPrev()
+    if (e.key === 'ArrowRight') pf.flipNext()
+    if (e.key === 'i' || e.key === 'I') { jumpTo(indexPg); closeToc() }
+    if (e.key === 's' || e.key === 'S') openToc()
+    if (e.key === 'Escape') {
+      if (tocSidebar.classList.contains('is-open')) { closeToc(); return }
+      if (document.body.classList.contains('is-fullscreen')) {
+        document.body.classList.remove('is-fullscreen')
+        setTimeout(() => pf.update(), 100)
+      }
+    }
+  })
+
+  /* Reveal flipbook + sidebar toggle */
+  gsap.from(flipEl.parentElement, {
+    opacity: 0, scale: .9, y: 40, duration: 1.4, ease: 'expo.out', delay: .15
+  })
+  gsap.from('.toc-toggle', {
+    opacity: 0, x: -30, duration: .8, ease: 'expo.out', delay: .8
+  })
+}
+
+document.addEventListener('DOMContentLoaded', initCatalogue)
+</script>
+</body>
+</html>
