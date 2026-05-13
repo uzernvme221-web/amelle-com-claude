@@ -152,9 +152,9 @@
       background:var(--orange);border-color:var(--orange);
       mix-blend-mode:normal;
     }
-    @media(pointer:coarse){
+    @media(pointer:coarse),(hover:none),(max-width:900px){
       body{cursor:auto;}
-      .cursor-dot,.cursor-ring{display:none;}
+      .cursor-dot,.cursor-ring{display:none!important;}
     }
 
     /* ── SCROLL PROGRESS BAR ──────────────────────────────── */
@@ -952,16 +952,44 @@
     }
 
     @media(max-width:900px){
-      #catalogue{padding:90px 24px 100px;}
-      .cat-wrap{grid-template-columns:1fr;gap:60px;text-align:center;}
-      .cat-stats{justify-content:center;}
+      #catalogue{padding:80px 20px 90px;}
+      .cat-wrap{grid-template-columns:1fr;gap:50px;text-align:center;}
+      .cat-text h2{font-size:clamp(1.7rem,8vw,2.4rem);}
+      .cat-stats{justify-content:center;gap:24px;}
+      .cat-stat strong{font-size:1.6rem;}
       .cat-cta-row{justify-content:center;}
-      .cat-text p.cat-lead{margin-left:auto;margin-right:auto;}
-      .book{width:240px;height:340px;}
-      .book-cover-mid{font-size:1.9rem;}
-      .book-stage{min-height:420px;}
-      .book-float-tag.tag-1{right:0%;}
-      .book-float-tag.tag-2{left:0%;}
+      .cat-cta{padding:16px 24px;font-size:.9rem;}
+      .cat-cta span:first-child{flex:1;}
+      .cat-text p.cat-lead{margin-left:auto;margin-right:auto;font-size:.98rem;}
+      .book-stage{
+        min-height:420px;
+        perspective:none;          /* flatten on mobile */
+      }
+      .book{
+        width:220px;height:312px;
+        transform:rotateX(0) rotateY(0);  /* face-on */
+      }
+      .book-stage:hover .book{transform:translateY(-6px);}
+      .book-cover{transform:none;}
+      .book-cover-mid{font-size:1.85rem;}
+      .book-cover-mid span:last-child{font-size:.82rem;}
+      .book-pages,.book-spine,.book-back{display:none;}
+      .book-float-tag{font-size:.7rem;padding:8px 12px;}
+      .book-float-tag.tag-1{top:10%;right:4%;}
+      .book-float-tag.tag-2{bottom:14%;left:4%;}
+    }
+    @media(max-width:480px){
+      .cat-text h2{font-size:1.85rem;line-height:1.15;}
+      .cat-text h2 br{display:none;}
+      .book{width:220px;height:312px;}
+      .book-cover{padding:22px 18px 20px;}
+      .book-cover-mid{font-size:1.55rem;letter-spacing:-.04em;}
+      .book-cover-mid span{white-space:normal;}    /* allow wrap so 'Catalogue' fits */
+      .book-cover-mid span:last-child{font-size:.72rem;margin-top:8px;}
+      .book-cover-brand{font-size:.6rem;}
+      .book-cover-tagline{font-size:.55rem;}
+      .book-cover-bottom{font-size:.55rem;}
+      .book-cover-pages{font-size:.78rem;}
     }
 
     /* ── MID CTA ──────────────────────────────────────────── */
@@ -1709,7 +1737,7 @@
   <div class="cat-wrap">
     <div class="cat-text" data-reveal>
       <p class="section-eyebrow">Notre catalogue</p>
-      <h2>Découvrez tout<br>notre <span class="grad">savoir-faire</span></h2>
+      <h2>Découvrez tout <br>notre <span class="grad">savoir-faire</span></h2>
       <p class="cat-lead">159 pages soigneusement conçues qui présentent l'ensemble de notre savoir-faire : impression grand format, signalétique, goodies tech, organiseurs, écriture, packaging, événementiel et bien plus encore.</p>
       <div class="cat-stats">
         <div class="cat-stat"><strong>159</strong><span>Pages</span></div>
@@ -2131,11 +2159,13 @@ class ParticlesEngine {
   }
 }
 
-/* ── LENIS SMOOTH SCROLL ─────────────────────────────────────── */
+/* ── LENIS SMOOTH SCROLL (desktop only) ──────────────────────── */
+const _isTouch = matchMedia('(pointer: coarse)').matches || matchMedia('(hover: none)').matches
 const lenis = new Lenis({
   duration: 1.15,
   easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smoothWheel: true,
+  smoothWheel: !_isTouch,
+  smoothTouch: false,
   wheelMultiplier: 1,
   touchMultiplier: 2,
 })
@@ -2304,10 +2334,23 @@ document.addEventListener('DOMContentLoaded', () => {
     })()
   })
 
-  /* ── CATALOGUE BOOK — mouse parallax 3D tilt ─────────────── */
+  /* ── CATALOGUE BOOK — mouse parallax 3D tilt (desktop only) ── */
+  const _bookTiltEnabled = matchMedia('(min-width: 901px)').matches && matchMedia('(hover: hover)').matches
   document.querySelectorAll('[data-tilt-book]').forEach(stage => {
     const book = stage.querySelector('.book')
     if (!book) return
+    if (!_bookTiltEnabled) {
+      /* Just do the reveal animation on mobile, skip mouse tilt */
+      gsap.from(stage, {
+        opacity: 0, y: 60, duration: 1.1, ease: 'expo.out',
+        scrollTrigger: { trigger: stage, start: 'top 85%' }
+      })
+      gsap.from(stage.querySelectorAll('.book-float-tag'), {
+        opacity: 0, scale: .8, duration: .8, stagger: .15, ease: 'expo.out',
+        scrollTrigger: { trigger: stage, start: 'top 75%' }
+      })
+      return
+    }
     let tx = -28, ty = 8, cx = -28, cy = 8, active = false
 
     stage.addEventListener('mouseenter', () => { active = true })

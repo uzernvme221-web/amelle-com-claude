@@ -65,7 +65,7 @@
       mix-blend-mode:difference;transition:width .3s,height .3s,border-color .3s,background .3s;
     }
     .cursor-ring.is-hover{width:62px;height:62px;background:rgba(255,255,255,.06);}
-    @media(pointer:coarse){.cursor-dot,.cursor-ring{display:none;}}
+    @media(pointer:coarse),(hover:none),(max-width:900px){.cursor-dot,.cursor-ring{display:none!important;}}
 
     /* Scroll progress */
     .scroll-progress{
@@ -328,8 +328,8 @@
     }
 
     @media(max-width:760px){
-      .toc-toggle{top:72px;left:14px;width:44px;height:44px;}
-      .toc-toggle svg{width:18px;height:18px;}
+      /* Hide the drawer toggle on phone — we use inline category chips instead */
+      .toc-toggle, .toc-sidebar, .toc-backdrop{display:none!important;}
     }
 
     /* Info strip below */
@@ -381,22 +381,36 @@
     /* Mobile fallback - vertical scroll viewer */
     .mobile-viewer{display:none;}
     @media(max-width:760px){
-      .flip-wrap, .controls .ctrl-fullscreen{display:none !important;}
+      .cat-stage{display:block;padding:0;}
+      .flip-wrap, .controls{display:none !important;}
       .mobile-viewer{
         display:flex;flex-direction:column;gap:14px;
-        padding:30px 16px;
+        padding:20px 16px 40px;
       }
       .mobile-viewer img{
         width:100%;border-radius:8px;
         box-shadow:0 12px 30px -10px rgba(0,0,0,.5);
         background:#e9e6dd;
       }
-      .info-strip{grid-template-columns:1fr;padding:30px 16px 60px;}
+      /* Mobile category chips above pages */
+      .mobile-cats{
+        display:flex;flex-wrap:wrap;gap:8px;
+        padding:14px 16px 6px;
+      }
+      .mobile-cat{
+        font-size:.75rem;font-weight:600;
+        padding:8px 12px;border-radius:60px;
+        background:rgba(240,242,255,.04);
+        border:1px solid rgba(240,242,255,.10);
+        color:var(--text);cursor:pointer;
+      }
+      .mobile-cat:active{transform:scale(.95);}
+      .info-strip{grid-template-columns:1fr;padding:30px 16px 60px;gap:14px;}
       .cat-header{padding:90px 16px 20px;}
-      .controls{padding:20px 16px 30px;gap:10px;}
-      .ctrl-counter{padding:0 14px;}
-      .ctrl-download span{display:none;}
-      .ctrl-download{padding:0;width:50px;justify-content:center;}
+      .cat-header h1{font-size:clamp(2rem,9vw,2.6rem);}
+      .cat-header p{font-size:.92rem;}
+      .cat-meta{gap:24px;font-size:.72rem;}
+      .final-cta{padding:40px 16px 80px;}
     }
 
     /* Fullscreen mode */
@@ -567,7 +581,8 @@ const fog = new FogEngine(document.getElementById('fogCanvas'))
 ;(function loop(){fog.draw();requestAnimationFrame(loop)})()
 
 /* Lenis smooth scroll */
-const lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: true })
+const _isTouch = matchMedia('(pointer: coarse)').matches || matchMedia('(hover: none)').matches
+const lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: !_isTouch, smoothTouch: false })
 lenis.on('scroll', ScrollTrigger.update)
 gsap.ticker.add(t => lenis.raf(t*1000))
 gsap.ticker.lagSmoothing(0)
@@ -645,19 +660,36 @@ async function initCatalogue() {
   loadingFill.style.width = '20%'
 
   if (isMobile) {
-    /* Mobile: simple vertical scrolling viewer with lazy load */
+    /* Mobile: vertical scrolling viewer + category quick-jump chips */
     const mv = document.getElementById('mobileViewer')
     flipEl.parentElement.style.display = 'none'
-    document.getElementById('controls').style.display = 'flex'
-    document.getElementById('btnPrev').style.display = 'none'
-    document.getElementById('btnNext').style.display = 'none'
-    document.querySelector('.ctrl-counter').style.display = 'none'
+
+    /* Build category chips row */
+    const toc = manifest.toc || []
+    if (toc.length) {
+      const chipsWrap = document.createElement('div')
+      chipsWrap.className = 'mobile-cats'
+      toc.forEach(item => {
+        const chip = document.createElement('button')
+        chip.className = 'mobile-cat'
+        chip.style.borderColor = (item.color || '#FF6521') + '88'
+        chip.style.color = item.color || '#FF6521'
+        chip.textContent = item.title
+        chip.addEventListener('click', () => {
+          const target = mv.querySelector(`img[data-pg="${item.page}"]`)
+          if (target) target.scrollIntoView({behavior:'smooth', block:'start'})
+        })
+        chipsWrap.appendChild(chip)
+      })
+      mv.parentElement.insertBefore(chipsWrap, mv)
+    }
 
     for (let i = 1; i <= totalPages; i++) {
       const img = document.createElement('img')
       img.loading = 'lazy'
       img.src = `catalogue-pages/p${String(i).padStart(3,'0')}.webp`
       img.alt = `Page ${i}`
+      img.dataset.pg = i
       mv.appendChild(img)
     }
     loadingFill.style.width = '100%'
