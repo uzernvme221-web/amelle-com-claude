@@ -332,6 +332,39 @@
       .toc-toggle, .toc-sidebar, .toc-backdrop{display:none!important;}
     }
 
+    /* Floating "Back to Index" FAB — mobile only, appears once scrolled past chips */
+    .fab-index{
+      position:fixed;bottom:24px;right:20px;z-index:950;
+      display:none;align-items:center;gap:10px;
+      padding:14px 22px;border-radius:60px;border:none;
+      background:linear-gradient(135deg,var(--orange) 0%,#FF4D00 100%);
+      color:#fff;font:600 .92rem 'Inter',sans-serif;letter-spacing:.01em;cursor:pointer;
+      box-shadow:0 18px 40px -10px rgba(255,101,33,.55), 0 4px 14px -4px rgba(0,0,0,.4),
+                 inset 0 1px 0 rgba(255,255,255,.25);
+      opacity:0;transform:translateY(80px) scale(.85);
+      transition:opacity .35s var(--expo), transform .45s var(--expo);
+      pointer-events:none;
+    }
+    .fab-index.is-visible{
+      opacity:1;transform:translateY(0) scale(1);
+      pointer-events:auto;
+    }
+    .fab-index:active{transform:translateY(0) scale(.95);}
+    .fab-index svg{width:18px;height:18px;}
+    .fab-index .fab-pulse{
+      position:absolute;inset:0;border-radius:60px;
+      background:rgba(255,101,33,.55);
+      animation:fabPulse 2.4s ease-out infinite;
+      pointer-events:none;
+    }
+    @keyframes fabPulse{
+      0%   { transform:scale(1);   opacity:.55; }
+      100% { transform:scale(1.5); opacity:0; }
+    }
+    @media(max-width:760px){
+      .fab-index{display:inline-flex;}
+    }
+
     /* Info strip below */
     .info-strip{
       position:relative;z-index:2;
@@ -539,6 +572,13 @@
   </a>
 </section>
 
+<!-- Floating "Index" FAB — mobile only -->
+<button class="fab-index" id="fabIndex" aria-label="Retour à l'index des catégories">
+  <span class="fab-pulse"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+  <span>Index</span>
+</button>
+
 <script>
 gsap.registerPlugin(ScrollTrigger)
 
@@ -693,6 +733,36 @@ async function initCatalogue() {
       mv.appendChild(img)
     }
     loadingFill.style.width = '100%'
+
+    /* Floating "Index" FAB — show after scrolling past chips, hide near top */
+    const fab = document.getElementById('fabIndex')
+    const chipsEl = document.querySelector('.mobile-cats')
+    /* Where to scroll back to — top of chips (clamped above 0) */
+    const indexScrollTarget = () => Math.max(0, (chipsEl?.offsetTop || 0) - 80)
+    /* Threshold to reveal FAB: once user is past the chips block */
+    const revealAt = () => (chipsEl?.offsetTop || 0) + (chipsEl?.offsetHeight || 0) + 100
+
+    let lastVisible = false
+    function updateFab() {
+      const visible = window.scrollY > revealAt()
+      if (visible !== lastVisible) {
+        fab.classList.toggle('is-visible', visible)
+        lastVisible = visible
+      }
+    }
+    window.addEventListener('scroll', updateFab, { passive: true })
+    window.addEventListener('resize', updateFab)
+    updateFab()
+
+    fab.addEventListener('click', () => {
+      window.scrollTo({ top: indexScrollTarget(), behavior: 'smooth' })
+      /* Briefly emphasize the chips so the user sees where they landed */
+      if (chipsEl) {
+        chipsEl.style.transition = 'box-shadow .8s ease'
+        chipsEl.style.boxShadow = '0 0 0 2px rgba(255,101,33,.4)'
+        setTimeout(() => { chipsEl.style.boxShadow = '' }, 1200)
+      }
+    })
     return
   }
 
